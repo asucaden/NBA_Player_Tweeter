@@ -1,24 +1,26 @@
 const mongoose = require('mongoose');
+const { initialTweetTemplates } = require('../tweet_templates');
 const Schema = mongoose.Schema;
 
-const playerComparisonSchema = new Schema({
-  playerA: {
+const initialTweetSchema = new Schema({
+  player1: {
     cm_name: String,
     pts: Number,
     ast: Number,
     reb: Number,
     cm_ts_pct: Number,
   },
-  playerB: {
+  player2: {
     cm_name: String,
     pts: Number,
     ast: Number,
     reb: Number,
     cm_ts_pct: Number,
   },
+  tweet_id: String,
 });
 
-module.exports = PlayerComparison = mongoose.model(
-  'playerComparison',
-  playerComparisonSchema
+module.exports = InitialTweet = mongoose.model(
+  'initialTweet',
+  initialTweetSchema
 );

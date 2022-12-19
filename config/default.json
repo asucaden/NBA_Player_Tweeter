@@ -1,6 +1,4 @@
 {
     "mongoURI": "mongodb+srv://nba-app:RuxF3nHWH8ayDniR@player-comparer-cluster.isd8ygm.mongodb.net/?retryWrites=true&w=majority",
-    "jwtSecret": "superdupersecrettokenthatnooneknows",
-    "githubClientId": "6651fc770ba211e45761",
-    "githubSecret": "eb88b3c20510b9791f96ed941e86a90f363fab78"
+    "jwtSecret": "superdupersecrettokenthatnooneknows"
 }
