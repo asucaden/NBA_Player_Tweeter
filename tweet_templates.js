@@ -11,8 +11,8 @@ const initialTweetTemplates = [
 
 const replyTemplates = [
   (playerA, playerB) => {
-    return `${playerA.cm_name}: ${playerA.pts}/${playerA.reb}/${playerA.ast} - ${playerA.cm_ts_pct}
-${playerB.cm_name}: ${playerB.pts}/${playerB.reb}/${playerB.ast} - ${playerB.cm_ts_pct}`;
+    return `${playerA.cm_name}: ${playerA.pts}/${playerA.reb}/${playerA.ast} - ${playerA.cm_ts_pct}%
+${playerB.cm_name}: ${playerB.pts}/${playerB.reb}/${playerB.ast} - ${playerB.cm_ts_pct}%`;
   },
 ];
 

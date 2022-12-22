@@ -1,6 +1,8 @@
 require('dotenv').config();
+const https = require('https');
 const { TwitterClient } = require('twitter-api-client');
 const PlayerComparison = require('./models/PlayerComparison');
+const { makeComparison } = require('./makeComparison.js');
 const InitialTweet = require('./models/InitialTweet');
 const { buildInitialTweet, buildReplyTweet } = require('./buildTweets');
 
@@ -14,8 +16,12 @@ const twitterClient = new TwitterClient({
 const sendTweets = async () => {
   try {
     console.log('begin sendTweets()');
-    const players = await PlayerComparison.findOneAndDelete();
-    console.log('found a PlayerComparison');
+    let players = await PlayerComparison.findOneAndDelete();
+    if (!players) {
+      console.log('Out of comparisons from website, making a fresh one now...');
+      players = await makeComparison();
+    }
+    console.log('PlayerComparison aquired');
     const x = Math.floor(Math.random() * 2) == 0;
     let playerA = x ? players.playerA : players.playerB;
     let playerB = x ? players.playerB : players.playerA;
@@ -43,11 +49,14 @@ const sendTweets = async () => {
   }
 };
 
-// TODO make function to send only initial tweet and store most recently created tweet id and players
 const sendInitialTweet = async () => {
   try {
     console.log('begin sendInitialTweets()');
-    const players = await PlayerComparison.findOneAndDelete();
+    let players = await PlayerComparison.findOneAndDelete();
+    if (!players) {
+      console.log('Out of comparisons from website, making a fresh one now...');
+      players = await makeComparison();
+    }
     console.log('found a PlayerComparison');
     const x = Math.floor(Math.random() * 2) == 0;
     let playerA = x ? players.playerA : players.playerB;
@@ -67,7 +76,7 @@ const sendInitialTweet = async () => {
     console.log(error);
   }
 };
-// TODO make function to send fetch most recently created tweet id and players and post reply tweet
+
 const sendReply = async () => {
   try {
     const { player1, player2, tweet_id } =

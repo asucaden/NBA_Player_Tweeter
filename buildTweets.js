@@ -3,7 +3,8 @@ const { initialTweetTemplates, replyTemplates } = require('./tweet_templates');
 const buildInitialTweet = (playerA, playerB) => {
   const idx = Math.floor(Math.random() * initialTweetTemplates.length);
   const tweetText =
-    initialTweetTemplates[idx] + '\n  PTS  / REB / AST  -  TS%\n';
+    initialTweetTemplates[idx] +
+    '#NBA @nba @espn #NBAonTNT\n(Stats format is: pts/reb/ast - ts%)\n';
   const choices = [
     `${playerA.pts}/${playerA.reb}/${playerA.ast} - ${playerA.cm_ts_pct}`,
     `${playerB.pts}/${playerB.reb}/${playerB.ast} - ${playerB.cm_ts_pct}`,
