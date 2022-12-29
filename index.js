@@ -1,7 +1,10 @@
-const { sendTweets, sendInitialTweet, sendReply } = require('./sendTweet');
+const {
+  sendTweets,
+  sendPollTweet,
+  sendStandaloneTweet,
+  sendReply,
+} = require('./sendTweet');
 const connectDB = require('./config/db');
 
 connectDB();
-console.log('index.js 1');
-sendTweets();
-console.log('index.js 2');
+setTimeout(sendTweets, 2000);

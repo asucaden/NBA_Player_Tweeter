@@ -1,4 +1,4 @@
-const initialTweetTemplates = [
+const pollTemplates = [
   'Who you got?\n',
   'Without knowing names, who would you prefer?\n',
   'Who is better based on solely on these stats?\n',
@@ -16,4 +16,13 @@ ${playerB.cm_name}: ${playerB.pts}/${playerB.reb}/${playerB.ast} - ${playerB.cm_
   },
 ];
 
-module.exports = { initialTweetTemplates, replyTemplates };
+const standaloneTemplates = [
+  (playerA, playerB) => {
+    return `2022-23 Stats (pts/ reb /ast - ts%):
+${playerA.cm_name}: ${playerA.pts}/${playerA.reb}/${playerA.ast} - ${playerA.cm_ts_pct}%
+${playerB.cm_name}: ${playerB.pts}/${playerB.reb}/${playerB.ast} - ${playerB.cm_ts_pct}%
+#NBA`;
+  },
+];
+
+module.exports = { pollTemplates, replyTemplates, standaloneTemplates };

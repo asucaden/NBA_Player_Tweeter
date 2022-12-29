@@ -1,20 +1,23 @@
-const { initialTweetTemplates, replyTemplates } = require('./tweet_templates');
+const {
+  pollTemplates,
+  replyTemplates,
+  standaloneTemplates,
+} = require('./tweet_templates');
 
-const buildInitialTweet = (playerA, playerB) => {
-  const idx = Math.floor(Math.random() * initialTweetTemplates.length);
-  const tweetText =
-    initialTweetTemplates[idx] +
-    '#NBA @nba @espn #NBAonTNT\n(Stats format is: pts/reb/ast - ts%)\n';
+const POLL_LENGTH = 4 * 60; // in minutes
+
+const buildPollTweet = (playerA, playerB) => {
+  const idx = Math.floor(Math.random() * pollTemplates.length);
+  const tweetText = pollTemplates[idx] + '#NBA (pts / reb / ast - ts%)\n';
   const choices = [
     `${playerA.pts}/${playerA.reb}/${playerA.ast} - ${playerA.cm_ts_pct}`,
     `${playerB.pts}/${playerB.reb}/${playerB.ast} - ${playerB.cm_ts_pct}`,
   ];
-  const poll_time = 8 * 60;
   return {
     text: tweetText,
     poll: {
       options: choices,
-      duration_minutes: poll_time,
+      duration_minutes: POLL_LENGTH,
     },
   };
 };
@@ -32,22 +35,10 @@ const buildReplyTweet = (playerA, playerB, initialTweetID) => {
   };
 };
 
-module.exports = { buildInitialTweet, buildReplyTweet };
+const buildStandaloneTweet = (playerA, playerB) => {
+  const idx = Math.floor(Math.random() * standaloneTemplates.length);
+  const tweetText = standaloneTemplates[idx](playerA, playerB);
+  return { text: tweetText };
+};
 
-/*
-  `If you had to pick one...\n
-  Player A:\nPTS: ${playerA.pts}\nAST: ${playerA.ast}\nREB: ${playerA.reb}\nTS%: ${playerA.cm_ts_pct}\n
-  Player B:\nPTS: ${playerB.pts}\nAST: ${playerB.ast}\nREB: ${playerB.reb}\nTS%: ${playerB.cm_ts_pct}`,
-  
-  `Without knowing names, who would you choose?\n
-  Player A:\nPTS: ${playerA.pts}\nAST: ${playerA.ast}\nREB: ${playerA.reb}\nTS%: ${playerA.cm_ts_pct}\n
-  Player B:\nPTS: ${playerB.pts}\nAST: ${playerB.ast}\nREB: ${playerB.reb}\nTS%: ${playerB.cm_ts_pct}`,
-  
-  `A or B?\n
-  Player A:\nPTS: ${playerA.pts}\nAST: ${playerA.ast}\nREB: ${playerA.reb}\nTS%: ${playerA.cm_ts_pct}\n
-  Player B:\nPTS: ${playerB.pts}\nAST: ${playerB.ast}\nREB: ${playerB.reb}\nTS%: ${playerB.cm_ts_pct}`,
-  
-  `Make your choice 🤔\n
-  Player A:\nPTS: ${playerA.pts}\nAST: ${playerA.ast}\nREB: ${playerA.reb}\nTS%: ${playerA.cm_ts_pct}\n
-  Player B:\nPTS: ${playerB.pts}\nAST: ${playerB.ast}\nREB: ${playerB.reb}\nTS%: ${playerB.cm_ts_pct}`
-  */
+module.exports = { buildPollTweet, buildReplyTweet, buildStandaloneTweet };

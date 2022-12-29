@@ -1,10 +1,12 @@
 require('dotenv').config();
-const https = require('https');
 const { TwitterClient } = require('twitter-api-client');
-const PlayerComparison = require('./models/PlayerComparison');
-const { makeComparison } = require('./makeComparison.js');
+const { getComparison } = require('./getComparison.js');
 const InitialTweet = require('./models/InitialTweet');
-const { buildInitialTweet, buildReplyTweet } = require('./buildTweets');
+const {
+  buildPollTweet,
+  buildReplyTweet,
+  buildStandaloneTweet,
+} = require('./buildTweets');
 
 const twitterClient = new TwitterClient({
   apiKey: process.env.TWITTER_API_KEY,
@@ -15,54 +17,17 @@ const twitterClient = new TwitterClient({
 
 const sendTweets = async () => {
   try {
-    console.log('begin sendTweets()');
-    let players = await PlayerComparison.findOneAndDelete();
-    if (!players) {
-      console.log('Out of comparisons from website, making a fresh one now...');
-      players = await makeComparison();
-    }
-    console.log('PlayerComparison aquired');
-    const x = Math.floor(Math.random() * 2) == 0;
-    let playerA = x ? players.playerA : players.playerB;
-    let playerB = x ? players.playerB : players.playerA;
-    const initialTweet = buildInitialTweet(playerA, playerB);
-    console.log('built the initial tweet');
-    const initialRes = await twitterClient.tweetsV2.createTweet(initialTweet);
-    console.log(initialRes);
-    setTimeout(async function () {
-      try {
-        console.log('Made it past the 2 sec wait');
-        console.log(`Here is the id: ${initialRes.data.id}`);
-        const replyTweet = buildReplyTweet(
-          playerA,
-          playerB,
-          initialRes.data.id
-        );
-        const replyRes = await twitterClient.tweetsV2.createTweet(replyTweet);
-        console.log(replyRes);
-      } catch (error) {
-        console.log(error);
-      }
-    }, 2000);
+    await sendPollTweet();
+    setTimeout(sendReply, 3000);
   } catch (error) {
     console.log(error);
   }
 };
 
-const sendInitialTweet = async () => {
+const sendPollTweet = async () => {
   try {
-    console.log('begin sendInitialTweets()');
-    let players = await PlayerComparison.findOneAndDelete();
-    if (!players) {
-      console.log('Out of comparisons from website, making a fresh one now...');
-      players = await makeComparison();
-    }
-    console.log('found a PlayerComparison');
-    const x = Math.floor(Math.random() * 2) == 0;
-    let playerA = x ? players.playerA : players.playerB;
-    let playerB = x ? players.playerB : players.playerA;
-    const tweet = buildInitialTweet(playerA, playerB);
-    console.log('built the initial tweet');
+    const { playerA, playerB } = await getComparison();
+    const tweet = await buildPollTweet(playerA, playerB);
     const initialRes = await twitterClient.tweetsV2.createTweet(tweet);
     console.log(initialRes);
     const initialTweet = new InitialTweet({
@@ -77,13 +42,26 @@ const sendInitialTweet = async () => {
   }
 };
 
+const sendStandaloneTweet = async () => {
+  try {
+    const { playerA, playerB } = await getComparison();
+    const tweet = await buildStandaloneTweet(playerA, playerB);
+    const initialRes = await twitterClient.tweetsV2.createTweet(tweet);
+    console.log(initialRes);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const sendReply = async () => {
   try {
-    const { player1, player2, tweet_id } =
-      await InitialTweet.findOneAndDelete(); //TODO: Error handling (when no initial tweets, just stop and report there are none)
-    const replyTweet = buildReplyTweet(player1, player2, tweet_id);
-    const replyRes = await twitterClient.tweetsV2.createTweet(replyTweet);
-    console.log(replyRes);
+    const initial_tweet = await InitialTweet.findOneAndDelete();
+    if (initial_tweet) {
+      const { player1, player2, tweet_id } = initial_tweet;
+      const replyTweet = await buildReplyTweet(player1, player2, tweet_id);
+      const replyRes = await twitterClient.tweetsV2.createTweet(replyTweet);
+      console.log(replyRes);
+    } else console.log('No tweet found');
   } catch (error) {
     console.log(error);
   }
@@ -91,6 +69,7 @@ const sendReply = async () => {
 
 module.exports = {
   sendTweets,
-  sendInitialTweet,
+  sendPollTweet,
+  sendStandaloneTweet,
   sendReply,
 };
