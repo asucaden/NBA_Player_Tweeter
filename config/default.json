@@ -1,4 +1,0 @@
-{
-    "mongoURI": "mongodb+srv://nba-app:RuxF3nHWH8ayDniR@player-comparer-cluster.isd8ygm.mongodb.net/?retryWrites=true&w=majority",
-    "jwtSecret": "superdupersecrettokenthatnooneknows"
-}
