@@ -1,5 +1,5 @@
 {
-  "name": "nba_player_comparer_tweeter",
+  "name": "nba-player-tweeter",
   "version": "1.0.0",
   "description": "NBA player comparer tweeter",
   "main": "index.js",

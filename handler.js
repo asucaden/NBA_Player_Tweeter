@@ -1,6 +1,10 @@
+'use strict';
+
 const mongoose = require('mongoose');
 const config = require('config');
 const db = config.get('mongoURI');
+const InitialTweet = require('./models/InitialTweet');
+
 const {
   sendTweets,
   sendPollTweet,
@@ -8,7 +12,7 @@ const {
   sendReply,
 } = require('./sendTweet');
 
-const run = async () => {
+module.exports.TweetAction = async (event, context) => {
   try {
     await mongoose.connect(db);
     console.log('MongoDB Connected...');
@@ -22,7 +26,7 @@ const run = async () => {
     await sendReply();
     return {
       message: 'Sent a reply tweet!',
-      //event,
+      event,
     };
   } else {
     const x = Math.floor(Math.random() * 3) == 0;
@@ -30,16 +34,14 @@ const run = async () => {
       await sendStandaloneTweet();
       return {
         message: 'Sent a standalone tweet!',
-        //event,
+        event,
       };
     } else {
       await sendPollTweet();
       return {
         message: 'Sent a poll tweet!',
-        //event,
+        event,
       };
     }
   }
 };
-
-run();

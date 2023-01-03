@@ -4,7 +4,7 @@ const {
   standaloneTemplates,
 } = require('./tweet_templates');
 
-const POLL_LENGTH = 4 * 60; // in minutes
+const POLL_LENGTH = 3 * 60; // in minutes
 
 const buildPollTweet = (playerA, playerB) => {
   const idx = Math.floor(Math.random() * pollTemplates.length);

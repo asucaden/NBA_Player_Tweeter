@@ -37,9 +37,11 @@ const sendPollTweet = async () => {
     });
     const savedTweet = await initialTweet.save();
     console.log(`Initial saved tweet is: ${savedTweet}`);
+    return initialRes;
   } catch (error) {
     console.log(error);
   }
+  return;
 };
 
 const sendStandaloneTweet = async () => {
@@ -48,9 +50,11 @@ const sendStandaloneTweet = async () => {
     const tweet = await buildStandaloneTweet(playerA, playerB);
     const initialRes = await twitterClient.tweetsV2.createTweet(tweet);
     console.log(initialRes);
+    return initialRes;
   } catch (error) {
     console.log(error);
   }
+  return;
 };
 
 const sendReply = async () => {
@@ -61,10 +65,12 @@ const sendReply = async () => {
       const replyTweet = await buildReplyTweet(player1, player2, tweet_id);
       const replyRes = await twitterClient.tweetsV2.createTweet(replyTweet);
       console.log(replyRes);
+      return replyRes;
     } else console.log('No tweet found');
   } catch (error) {
     console.log(error);
   }
+  return;
 };
 
 module.exports = {
