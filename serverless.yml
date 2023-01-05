@@ -1,22 +1,22 @@
 service: nba-player-tweeter
 frameworkVersion: '3'
 
-useDotenv: true
+#useDotenv: true
 
 provider:
   name: aws
   runtime: nodejs12.x
   memorySize: 2048
-  stage: dev
+  stage: prod
   timeout: 15
   region: us-west-2
 
 functions:
-  hello:
+  TweetAction:
     handler: handler.TweetAction
 
     events:
-      schedule: rate(3 hours)
+      - schedule: rate(5 hours)
     #      - cloudwatchLog: '/aws/lambda/hello'
     #      - cognitoUserPool:
     #          pool: MyUserPool

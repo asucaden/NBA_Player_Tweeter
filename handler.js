@@ -6,7 +6,6 @@ const db = config.get('mongoURI');
 const InitialTweet = require('./models/InitialTweet');
 
 const {
-  sendTweets,
   sendPollTweet,
   sendStandaloneTweet,
   sendReply,
@@ -31,13 +30,13 @@ module.exports.TweetAction = async (event, context) => {
   } else {
     const x = Math.floor(Math.random() * 3) == 0;
     if (x) {
-      await sendStandaloneTweet();
+      await sendPollTweet();
       return {
         message: 'Sent a standalone tweet!',
         event,
       };
     } else {
-      await sendPollTweet();
+      await sendStandaloneTweet();
       return {
         message: 'Sent a poll tweet!',
         event,
