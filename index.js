@@ -25,15 +25,15 @@ const run = async () => {
       //event,
     };
   } else {
-    const x = Math.floor(Math.random() * 3) == 0;
+    const x = Math.floor(Math.random() * 4) == 0;
     if (x) {
-      await sendStandaloneTweet();
+      await sendPollTweet();
       return {
         message: 'Sent a standalone tweet!',
         //event,
       };
     } else {
-      await sendPollTweet();
+      await sendStandaloneTweet();
       return {
         message: 'Sent a poll tweet!',
         //event,

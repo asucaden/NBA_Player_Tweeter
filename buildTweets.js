@@ -24,7 +24,13 @@ const buildPollTweet = (playerA, playerB) => {
 
 const buildReplyTweet = (playerA, playerB, initialTweetID) => {
   const idx = Math.floor(Math.random() * replyTemplates.length);
-  const replyText = replyTemplates[idx](playerA, playerB);
+  const replyText =
+    replyTemplates[idx](playerA, playerB) +
+    '\n#NBA #' +
+    playerA.cm_name.replace(/\s+/g, '') +
+    ' #' +
+    playerB.cm_name.replace(/\s+/g, '');
+
   console.log(`text is ${replyText}`);
   console.log(`id is ${initialTweetID}`);
   return {
@@ -37,7 +43,12 @@ const buildReplyTweet = (playerA, playerB, initialTweetID) => {
 
 const buildStandaloneTweet = (playerA, playerB) => {
   const idx = Math.floor(Math.random() * standaloneTemplates.length);
-  const tweetText = standaloneTemplates[idx](playerA, playerB);
+  const tweetText =
+    standaloneTemplates[idx](playerA, playerB) +
+    ' #' +
+    playerA.cm_name.replace(/\s+/g, '') +
+    ' #' +
+    playerB.cm_name.replace(/\s+/g, '');
   return { text: tweetText };
 };
 

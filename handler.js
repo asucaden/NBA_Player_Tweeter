@@ -28,7 +28,7 @@ module.exports.TweetAction = async (event, context) => {
       event,
     };
   } else {
-    const x = Math.floor(Math.random() * 3) == 0;
+    const x = Math.floor(Math.random() * 4) == 0;
     if (x) {
       await sendPollTweet();
       return {
