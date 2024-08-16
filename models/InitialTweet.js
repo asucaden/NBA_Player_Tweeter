@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { initialTweetTemplates } = require('../tweet_templates');
+const mongoose = require("mongoose");
+const { initialTweetTemplates } = require("../tweet_templates");
 const Schema = mongoose.Schema;
 
 const initialTweetSchema = new Schema({
@@ -21,6 +21,6 @@ const initialTweetSchema = new Schema({
 });
 
 module.exports = InitialTweet = mongoose.model(
-  'initialTweet',
+  "initialTweet",
   initialTweetSchema
 );

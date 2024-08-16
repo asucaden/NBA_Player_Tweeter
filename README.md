@@ -1,6 +1,6 @@
 # NBA Player Tweeter
 
-Did you know that last year, Shai Gilgeous-Alexander had almost the same amount of points, rebounds and assists as superstar Steph Curry? <a href="http://twitter.com/c_swish_stats/" target="_blank">@c_swish_stats on Twitter</a> shows more comparisons like this every day!  Give it a follow!
+Did you know that last year, Shai Gilgeous-Alexander had almost the same amount of points, rebounds and assists as superstar Steph Curry? <a href="http://twitter.com/c_swish_stats/" target="_blank">@c_swish_stats on Twitter</a> shows more comparisons like this every day! Give it a follow!
 
 ### Under the hood
 

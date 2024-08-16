@@ -1,5 +1,5 @@
-const Player = require('./models/Player');
-const PlayerComparison = require('./models/PlayerComparison');
+const Player = require("./models/Player");
+const PlayerComparison = require("./models/PlayerComparison");
 
 // These constants calibrate how 2 players are compared
 const TOTSPREAD = 5; // Controls how similar the 2 players pts+asts+rebs must be.  Lower means players must be closer statisticly.
@@ -71,7 +71,7 @@ const makeComparison = async () => {
         }
       }
     }
-    console.log('Took' + i + 'tries');
+    console.log("Took" + i + "tries");
     const res = {
       playerA: {
         cm_name: sleeperPlayer.cm_name,
@@ -99,10 +99,10 @@ const getComparison = async () => {
   try {
     let players = await PlayerComparison.findOneAndDelete();
     if (!players) {
-      console.log('Out of comparisons from DB, making a fresh one now...');
+      console.log("Out of comparisons from DB, making a fresh one now...");
       players = await makeComparison();
     }
-    console.log('PlayerComparison aquired');
+    console.log("PlayerComparison aquired");
     const x = Math.floor(Math.random() * 2) == 0;
     let playerA = x ? players.playerA : players.playerB;
     let playerB = x ? players.playerB : players.playerA;

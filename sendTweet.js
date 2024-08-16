@@ -1,12 +1,12 @@
-require('dotenv').config();
-const { TwitterClient } = require('twitter-api-client');
-const { getComparison } = require('./getComparison.js');
-const InitialTweet = require('./models/InitialTweet');
+require("dotenv").config();
+const { TwitterClient } = require("twitter-api-client");
+const { getComparison } = require("./getComparison.js");
+const InitialTweet = require("./models/InitialTweet");
 const {
   buildPollTweet,
   buildReplyTweet,
   buildStandaloneTweet,
-} = require('./buildTweets');
+} = require("./buildTweets");
 
 const twitterClient = new TwitterClient({
   apiKey: process.env.TWITTER_API_KEY,
@@ -66,7 +66,7 @@ const sendReply = async () => {
       const replyRes = await twitterClient.tweetsV2.createTweet(replyTweet);
       console.log(replyRes);
       return replyRes;
-    } else console.log('No tweet found');
+    } else console.log("No tweet found");
   } catch (error) {
     console.log(error);
   }

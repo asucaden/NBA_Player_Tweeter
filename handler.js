@@ -1,20 +1,20 @@
-'use strict';
+"use strict";
 
-const mongoose = require('mongoose');
-const config = require('config');
-const db = config.get('mongoURI');
-const InitialTweet = require('./models/InitialTweet');
+const mongoose = require("mongoose");
+const config = require("config");
+const db = config.get("mongoURI");
+const InitialTweet = require("./models/InitialTweet");
 
 const {
   sendPollTweet,
   sendStandaloneTweet,
   sendReply,
-} = require('./sendTweet');
+} = require("./sendTweet");
 
 module.exports.TweetAction = async (event, context) => {
   try {
     await mongoose.connect(db);
-    console.log('MongoDB Connected...');
+    console.log("MongoDB Connected...");
   } catch (err) {
     console.error(err.message);
     process.exit(1); // Exit process with failure
@@ -24,7 +24,7 @@ module.exports.TweetAction = async (event, context) => {
   if (initial_tweet) {
     await sendReply();
     return {
-      message: 'Sent a reply tweet!',
+      message: "Sent a reply tweet!",
       event,
     };
   } else {
@@ -32,13 +32,13 @@ module.exports.TweetAction = async (event, context) => {
     if (x) {
       await sendPollTweet();
       return {
-        message: 'Sent a standalone tweet!',
+        message: "Sent a standalone tweet!",
         event,
       };
     } else {
       await sendStandaloneTweet();
       return {
-        message: 'Sent a poll tweet!',
+        message: "Sent a poll tweet!",
         event,
       };
     }

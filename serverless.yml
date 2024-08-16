@@ -1,7 +1,7 @@
 org: cadenmidkiff
 app: nba-player-comparer
 service: nba-player-tweeter
-frameworkVersion: '3'
+frameworkVersion: "3"
 
 provider:
   name: aws

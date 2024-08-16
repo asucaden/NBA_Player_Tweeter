@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const playerComparisonSchema = new Schema({
@@ -19,6 +19,6 @@ const playerComparisonSchema = new Schema({
 });
 
 module.exports = PlayerComparison = mongoose.model(
-  'playerComparison',
+  "playerComparison",
   playerComparisonSchema
 );
