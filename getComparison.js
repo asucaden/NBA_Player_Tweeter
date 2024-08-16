@@ -102,7 +102,7 @@ const getComparison = async () => {
       console.log("Out of comparisons from DB, making a fresh one now...");
       players = await makeComparison();
     }
-    console.log("PlayerComparison aquired");
+    console.log("PlayerComparison acquired");
     const x = Math.floor(Math.random() * 2) == 0;
     let playerA = x ? players.playerA : players.playerB;
     let playerB = x ? players.playerB : players.playerA;

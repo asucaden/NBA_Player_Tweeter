@@ -1,4 +1,4 @@
-require("dotenv").config();
+const config = require("config");
 const { TwitterClient } = require("twitter-api-client");
 const { getComparison } = require("./getComparison.js");
 const InitialTweet = require("./models/InitialTweet");
@@ -9,10 +9,10 @@ const {
 } = require("./buildTweets");
 
 const twitterClient = new TwitterClient({
-  apiKey: process.env.TWITTER_API_KEY,
-  apiSecret: process.env.TWITTER_API_SECRET,
-  accessToken: process.env.TWITTER_ACCESS_TOKEN,
-  accessTokenSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+  apiKey: config.get("TWITTER_API_KEY"),
+  apiSecret: config.get("TWITTER_API_SECRET"),
+  accessToken: config.get("TWITTER_ACCESS_TOKEN"),
+  accessTokenSecret: config.get("TWITTER_ACCESS_TOKEN_SECRET"),
 });
 
 const sendTweets = async () => {
